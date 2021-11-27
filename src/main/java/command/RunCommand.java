@@ -6,6 +6,7 @@ import command.dto.ResultDto;
 import dto.FileSystemLaboratoryDataDao;
 import dto.LaboratoryDataDao;
 import framework.command.AbstractRunnableCommand;
+import framework.utils.ConsoleUtils;
 import framework.utils.ValidationUtils;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;

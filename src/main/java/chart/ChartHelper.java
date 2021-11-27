@@ -17,7 +17,9 @@ public class ChartHelper {
 
     private static final ChartHelper INSTANCE = new ChartHelper();
 
-    private JFrame previousChart;
+    private static final Color BACKGROUND_COLOR = new Color(10, 15, 3);
+
+    private static final Color FOREGROUND_COLOR = new Color(151, 232, 39);
 
     private ChartHelper() {
     }
@@ -27,30 +29,35 @@ public class ChartHelper {
     }
 
     public void showNextChart(ResultDto result, double T) {
-        if (previousChart != null) {
-            previousChart.dispose();
-        }
-        XYChart chart = getChart();
-
-        ChartDto optimalDto = getChartDto(result.getY(), T);
-        XYSeries optimalSeries = chart.addSeries("y", optimalDto.getXData(), optimalDto.getYData());
-        optimalSeries.setMarker(SeriesMarkers.NONE);
-        optimalSeries.setLineColor(Color.GREEN);
-
-        ChartDto nonOptimalDto = getChartDto(result.getListOfUk(), T);
-        XYSeries nonOptimalSeries = chart.addSeries("u", nonOptimalDto.getXData(), nonOptimalDto.getYData());
-        nonOptimalSeries.setMarker(SeriesMarkers.NONE);
-        nonOptimalSeries.setLineColor(Color.RED);
-
-        this.previousChart = new SwingWrapper<>(chart).displayChart();
-        this.previousChart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        showNextChart(result.getY(), T, "y");
+        showNextChart(result.getListOfUk(), T, "u");
     }
 
-    private XYChart getChart() {
-        XYChart chart = new XYChart(1600, 900);
+    private void showNextChart(List<RealVector> vectors, double T, String seriesName) {
+        XYChart chart = getChart(seriesName);
+
+        ChartDto optimalDto = getChartDto(vectors, T);
+        XYSeries optimalSeries = chart.addSeries(seriesName, optimalDto.getXData(), optimalDto.getYData());
+        optimalSeries.setMarker(SeriesMarkers.NONE);
+        optimalSeries.setLineColor(FOREGROUND_COLOR);
+
+        JFrame frame = new SwingWrapper<>(chart).displayChart();
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    }
+
+    private XYChart getChart(String seriesName) {
+        XYChart chart = new XYChart(800, 450);
         chart.setTitle("Chart");
         chart.setXAxisTitle("t");
-        chart.setYAxisTitle("y(t)");
+        chart.setYAxisTitle(String.format("%s(t)", seriesName));
+        chart.getStyler().setChartBackgroundColor(BACKGROUND_COLOR);
+        chart.getStyler().setLegendBackgroundColor(BACKGROUND_COLOR);
+        chart.getStyler().setPlotBackgroundColor(BACKGROUND_COLOR);
+
+        chart.getStyler().setChartFontColor(FOREGROUND_COLOR);
+        chart.getStyler().setAxisTickMarksColor(FOREGROUND_COLOR);
+        chart.getStyler().setAxisTickLabelsColor(FOREGROUND_COLOR);
+        chart.getStyler().setPlotGridLinesColor(FOREGROUND_COLOR);
         return chart;
     }
 
