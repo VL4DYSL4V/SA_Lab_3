@@ -1,11 +1,14 @@
 package command;
 
+import chart.ChartHelper;
 import command.dto.MatricesDto;
+import command.dto.ResultDto;
 import dto.FileSystemLaboratoryDataDao;
 import dto.LaboratoryDataDao;
 import framework.command.AbstractRunnableCommand;
 import framework.utils.ValidationUtils;
 import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import java.util.ArrayList;
@@ -29,8 +32,26 @@ public class RunCommand extends AbstractRunnableCommand {
         RealVector L0 = getL0(dto);
         List<RealVector> listOfUk = getListOfUk(dto, L0);
         List<RealVector> listOfX = getListOfX(dto, listOfUk);
+        writeResults(listOfUk, listOfX);
+        showCharts(listOfUk, listOfX);
+    }
+
+    private void showCharts(List<RealVector> listOfUk, List<RealVector> listOfX) {
+        RealMatrix C = (RealMatrix) applicationState.getVariable("C");
+        double T = (double) applicationState.getVariable("T");
+        List<RealVector> listY = listOfX.stream()
+                .map(C::operate)
+                .collect(Collectors.toList());
+        ResultDto result = new ResultDto(listY, listOfUk);
+        ChartHelper.getInstance().showNextChart(result, T);
+    }
+
+    private void writeResults(List<RealVector> listOfUk, List<RealVector> listOfX) {
         dao.clear();
         ValidationUtils.requireEquals(listOfUk.size(), listOfX.size(), "List sizes must be equal");
+        for (int i = 0; i < listOfX.size(); i++) {
+            dao.append(i, listOfX.get(i), listOfUk.get(i));
+        }
     }
 
     private RealVector getL0(MatricesDto dto) {

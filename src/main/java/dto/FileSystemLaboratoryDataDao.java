@@ -51,12 +51,12 @@ public class FileSystemLaboratoryDataDao implements LaboratoryDataDao {
     }
 
     private String buildEntry(int step, RealVector x, RealVector u) {
-        String template = "%d\t%.4f\t%.4f\t%.4f\t%.4f%n";
+        String template = "%d\t\t\t%.4f\t\t\t%.4f\t\t\t%.4f\t\t\t%.4f%n";
         return String.format(template, step, x.getEntry(0), x.getEntry(1), x.getEntry(2), u.getEntry(0));
     }
 
     private String getHeader() {
-        return "k\t  x1\t  x2\t  x3\t  Uk";
+        return String.format("k\t\t\tx1\t\t\tx2\t\t\tx3\t\t\tUk%n");
     }
 
     @Override

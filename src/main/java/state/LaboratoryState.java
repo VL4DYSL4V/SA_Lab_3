@@ -45,6 +45,7 @@ public class LaboratoryState extends AbstractApplicationState {
         variableNameToGetter.put("q", this::getQ);
         variableNameToGetter.put("A", () -> MatrixUtils.getFrobeniusMatrix(new double[]{1, a1, a2}));
         variableNameToGetter.put("B", () -> new Array2DRowRealMatrix(new double[]{0, 0, b}));
+        variableNameToGetter.put("C", () -> new Array2DRowRealMatrix(new double[][]{{1, 0, 0}}));
     }
 
 }

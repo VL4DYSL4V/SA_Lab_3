@@ -1,6 +1,7 @@
 package command.dto;
 
 import framework.state.ApplicationState;
+import framework.utils.ConsoleUtils;
 import framework.utils.MatrixUtils;
 import lombok.Getter;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
@@ -101,7 +102,7 @@ public class MatricesDto {
         RealMatrix out = new Array2DRowRealMatrix(3, 3);
         for (RealMatrix Gp : listOfGp) {
             RealMatrix GpTransposed = Gp.transpose();
-            out.add(Gp.multiply(GpTransposed));
+            out = out.add(Gp.multiply(GpTransposed));
         }
         return out;
     }
