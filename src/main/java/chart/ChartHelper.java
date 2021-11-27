@@ -21,6 +21,10 @@ public class ChartHelper {
 
     private static final Color FOREGROUND_COLOR = new Color(151, 232, 39);
 
+    private JFrame previousFrameY;
+
+    private JFrame previousFrameUk;
+
     private ChartHelper() {
     }
 
@@ -29,11 +33,17 @@ public class ChartHelper {
     }
 
     public void showNextChart(ResultDto result, double T) {
-        showNextChart(result.getY(), T, "y");
-        showNextChart(result.getListOfUk(), T, "u");
+        if (this.previousFrameY != null) {
+            this.previousFrameY.dispose();
+        }
+        if (this.previousFrameUk != null) {
+            this.previousFrameUk.dispose();
+        }
+        this.previousFrameY = showNextChart(result.getY(), T, "y");
+        this.previousFrameUk = showNextChart(result.getListOfUk(), T, "u");
     }
 
-    private void showNextChart(List<RealVector> vectors, double T, String seriesName) {
+    private JFrame showNextChart(List<RealVector> vectors, double T, String seriesName) {
         XYChart chart = getChart(seriesName);
 
         ChartDto optimalDto = getChartDto(vectors, T);
@@ -43,6 +53,7 @@ public class ChartHelper {
 
         JFrame frame = new SwingWrapper<>(chart).displayChart();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        return frame;
     }
 
     private XYChart getChart(String seriesName) {
