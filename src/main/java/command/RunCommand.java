@@ -1,24 +1,26 @@
 package command;
 
 import command.dto.MatricesDto;
+import dto.FileSystemLaboratoryDataDao;
+import dto.LaboratoryDataDao;
 import framework.command.AbstractRunnableCommand;
+import framework.utils.ValidationUtils;
 import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class RunCommand extends AbstractRunnableCommand {
 
     public static final String NAME = "run";
 
+    private final LaboratoryDataDao dao;
+
     public RunCommand() {
         super(NAME);
+        this.dao = new FileSystemLaboratoryDataDao();
     }
 
     @Override
@@ -27,7 +29,8 @@ public class RunCommand extends AbstractRunnableCommand {
         RealVector L0 = getL0(dto);
         List<RealVector> listOfUk = getListOfUk(dto, L0);
         List<RealVector> listOfX = getListOfX(dto, listOfUk);
-
+        dao.clear();
+        ValidationUtils.requireEquals(listOfUk.size(), listOfX.size(), "List sizes must be equal");
     }
 
     private RealVector getL0(MatricesDto dto) {
@@ -45,7 +48,7 @@ public class RunCommand extends AbstractRunnableCommand {
     private List<RealVector> getListOfX(MatricesDto dto, List<RealVector> listOfUk) {
         List<RealVector> out = new ArrayList<>();
         RealVector previousX = new ArrayRealVector(3);
-        for (RealVector Uk: listOfUk) {
+        for (RealVector Uk : listOfUk) {
             RealVector newX = dto.getF().operate(previousX).add(dto.getG().operate(Uk));
             out.add(previousX);
             previousX = newX;
