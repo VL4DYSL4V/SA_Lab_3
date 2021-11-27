@@ -7,15 +7,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealVector;
 
 @Getter
 @Setter
 public class LaboratoryState extends AbstractApplicationState {
 
-    private int k0;
+    private int k0 = 40;
 
-    private double x;
+    private double x = 5;
 
     private double a1 = 1.0;
 
@@ -25,7 +24,7 @@ public class LaboratoryState extends AbstractApplicationState {
 
     private double T = 0.02;
 
-    private int q = 10;
+    private int q = 3;
 
     @Override
     protected void initVariableNameToSettersMap() {
