@@ -17,7 +17,7 @@ public class FileSystemLaboratoryDataDao implements LaboratoryDataDao {
 
     private static final String FILE_NAME = "laboratory.txt";
 
-    private Path path;
+    private final Path path;
 
     public FileSystemLaboratoryDataDao() {
         this.path = getFilePath();
