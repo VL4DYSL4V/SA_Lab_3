@@ -43,7 +43,10 @@ public class FileSystemLaboratoryDataDao implements LaboratoryDataDao {
     @Override
     public void append(int step, RealVector x, RealVector u) {
         try {
-            String nextEntry = Files.size(path) == 0 ? getHeader() : buildEntry(step, x, u);
+            if (Files.size(path) == 0) {
+                Files.write(path, getHeader().getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
+            }
+            String nextEntry = buildEntry(step, x, u);
             Files.write(path, nextEntry.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
         } catch (IOException e) {
             throw new RuntimeException(e);
