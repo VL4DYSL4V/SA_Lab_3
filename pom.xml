@@ -14,7 +14,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
 
-        <laboratory-framework.version>3.0.0</laboratory-framework.version>
+        <laboratory-framework.version>4.0.0</laboratory-framework.version>
         <lombok.version>1.18.22</lombok.version>
     </properties>
 

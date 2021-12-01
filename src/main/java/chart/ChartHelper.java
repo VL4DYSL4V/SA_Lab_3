@@ -49,7 +49,7 @@ public class ChartHelper {
         ChartDto optimalDto = getChartDto(vectors, T);
         XYSeries optimalSeries = chart.addSeries(seriesName, optimalDto.getXData(), optimalDto.getYData());
         optimalSeries.setMarker(SeriesMarkers.NONE);
-        optimalSeries.setLineColor(FOREGROUND_COLOR);
+//        optimalSeries.setLineColor(FOREGROUND_COLOR);
 
         JFrame frame = new SwingWrapper<>(chart).displayChart();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -61,14 +61,14 @@ public class ChartHelper {
         chart.setTitle("Chart");
         chart.setXAxisTitle("t");
         chart.setYAxisTitle(String.format("%s(t)", seriesName));
-        chart.getStyler().setChartBackgroundColor(BACKGROUND_COLOR);
-        chart.getStyler().setLegendBackgroundColor(BACKGROUND_COLOR);
-        chart.getStyler().setPlotBackgroundColor(BACKGROUND_COLOR);
-
-        chart.getStyler().setChartFontColor(FOREGROUND_COLOR);
-        chart.getStyler().setAxisTickMarksColor(FOREGROUND_COLOR);
-        chart.getStyler().setAxisTickLabelsColor(FOREGROUND_COLOR);
-        chart.getStyler().setPlotGridLinesColor(FOREGROUND_COLOR);
+//        chart.getStyler().setChartBackgroundColor(BACKGROUND_COLOR);
+//        chart.getStyler().setLegendBackgroundColor(BACKGROUND_COLOR);
+//        chart.getStyler().setPlotBackgroundColor(BACKGROUND_COLOR);
+//
+//        chart.getStyler().setChartFontColor(FOREGROUND_COLOR);
+//        chart.getStyler().setAxisTickMarksColor(FOREGROUND_COLOR);
+//        chart.getStyler().setAxisTickLabelsColor(FOREGROUND_COLOR);
+//        chart.getStyler().setPlotGridLinesColor(FOREGROUND_COLOR);
         return chart;
     }
 

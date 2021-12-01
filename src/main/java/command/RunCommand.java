@@ -5,7 +5,7 @@ import command.dto.MatricesDto;
 import command.dto.ResultDto;
 import dto.FileSystemLaboratoryDataDao;
 import dto.LaboratoryDataDao;
-import framework.command.AbstractRunnableCommand;
+import framework.command.DefaultRunCommand;
 import framework.utils.ValidationUtils;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;
@@ -15,14 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RunCommand extends AbstractRunnableCommand {
-
-    public static final String NAME = "run";
+public class RunCommand extends DefaultRunCommand {
 
     private final LaboratoryDataDao dao;
 
     public RunCommand() {
-        super(NAME);
         this.dao = new FileSystemLaboratoryDataDao();
     }
 
